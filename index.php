@@ -24,6 +24,11 @@ if(isset($_GET['sort'])){
 }else{
     $sort="";
 }
+if(isset($_GET['status'])){
+    $status=$_GET['status'];
+}else{
+    $status="";
+}
 
 $sql = "SELECT p.*, c.city_name, t.type_name 
         FROM properties p 
@@ -38,6 +43,10 @@ if($city_id != ""){
 if($type_id != ""){
     $sql .= " AND p.type_id = '$type_id'";
 }
+
+
+
+
 if($sort=="price_asc"){
     $sql .= " ORDER BY p.price ASC";
 }else if($sort=="price_deac"){
@@ -48,10 +57,17 @@ if($sort=="price_asc"){
     $sql .= " ORDER BY p.area DESC";
 }
 
+if($status=="For Rent"){
+    $sql .=" AND p.status = '$status'";
+}else if($status=="For Sale"){
+    $sql .=" AND p.status = '$status'";
+}
+
 
 $result = mysqli_query($conn, $sql);
 $citiesResult=mysqli_query($conn,"SELECT * FROM cities");
 $typeResult=mysqli_query($conn,"SELECT * FROM propertieType");
+$statusResult=mysqli_query($conn,"SELECT * FROM properties");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,6 +106,12 @@ $typeResult=mysqli_query($conn,"SELECT * FROM propertieType");
             <option value="price_deac" <?php echo($sort=="price_deac") ? "selected":"";?>>Price: High-Low</option>
             <option value="area_asc" <?php echo($sort=="area_asc") ? "selected":"";?>>area: Low-High </option>
             <option value="area_desc" <?php echo($sort=="area_desc") ? "selected":"";?>>area: High-Low</option>
+        </select>
+
+        <select name="status" onchange="this.form.submit()" >
+            <option value="">All</option>
+            <option value="For Sale" <?php echo($status=="For Sale") ? "selected":"";?>>For Sale</option>
+            <option value="For Rent" <?php echo($status=="For Rent") ? "selected":"";?>>For Rent</option>
         </select>
     </form>
 
