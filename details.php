@@ -22,8 +22,20 @@ $row=mysqli_fetch_assoc($result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="details.css">
+    <link rel="stylesheet" href="nav.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <h4>🏠 Hous And More</h4>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="estates.php">Real estates</a></li>
+            <li><a href="search.php">Search</a></li>
+        </ul>
+    </nav>
 
     <div class="details-container">
         <h1><?php echo $row['titel'];?></h1>
@@ -41,7 +53,7 @@ $row=mysqli_fetch_assoc($result);
             <p><strong>Description:</strong> <?php echo $row['description']; ?></p>
         </div>
 
-        <a href="index.php" class="back-link">← Back to listings</a>
+        <a href="estates.php" class="back-link">← Back to listings</a>
     </div>
 
 </body>
