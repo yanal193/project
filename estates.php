@@ -28,7 +28,7 @@ $sql = "SELECT p.*, c.city_name, t.type_name
         FROM properties p 
         JOIN cities c ON p.city_id = c.cities_id 
         JOIN propertieType t ON p.type_id = t.type_id
-        WHERE p.titel LIKE '%$search%'";
+        WHERE 1=1";
 
 if($city_id != ""){
     $sql .= " AND p.city_id = '$city_id'";
@@ -38,8 +38,9 @@ if($type_id != ""){
     $sql .= " AND p.type_id = '$type_id'";
 }
 
-
-
+if($status=="For Rent" || $status=="For Sale"){
+    $sql .= " AND p.status = '$status'";
+}
 
 if($sort=="price_asc"){
     $sql .= " ORDER BY p.price ASC";
@@ -51,17 +52,10 @@ if($sort=="price_asc"){
     $sql .= " ORDER BY p.area DESC";
 }
 
-if($status=="For Rent"){
-    $sql .=" AND p.status = '$status'";
-}else if($status=="For Sale"){
-    $sql .=" AND p.status = '$status'";
-}
-
 
 $result = mysqli_query($conn, $sql);
 $citiesResult=mysqli_query($conn,"SELECT * FROM cities");
 $typeResult=mysqli_query($conn,"SELECT * FROM propertieType");
-$statusResult=mysqli_query($conn,"SELECT * FROM properties");
 ?>
 <!DOCTYPE html>
 <html lang="en">
